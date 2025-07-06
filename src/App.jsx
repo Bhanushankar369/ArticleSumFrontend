@@ -8,7 +8,7 @@ const App = () => {
   
   const handleArticle = async () => {
     console.log(url)
-    const response = await fetch('http://127.0.0.1:8000/summarize/', {
+    const response = await fetch('https://articlebackend-dza5.onrender.com', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({url}),
