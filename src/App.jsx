@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { TailSpin } from 'react-loader-spinner';
 import './App.css'
 
 const App = () => {
@@ -42,9 +41,8 @@ const App = () => {
         >Submit</button>
       </div>
 
-      {loading ? (
+      {loading ?(
         <div className="spinner">
-          <TailSpin height={40} width={40} color='#4fa94d'></TailSpin>
         </div>
       ):(
         <textarea 
