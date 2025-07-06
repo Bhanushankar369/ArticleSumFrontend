@@ -1,20 +1,27 @@
 import React, { useState } from 'react'
+import { TailSpin } from 'react-loader-spinner';
 import './App.css'
 
 const App = () => {
 
+  const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState('')
   const [output, setOutput] = useState('')
   
   const handleArticle = async () => {
-    console.log(url)
-    const response = await fetch('https://articlebackend-dza5.onrender.com/summarize/', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({url}),
-    })
-    const data = await response.json();
-    setOutput(data.result);
+    setLoading(true);
+    try{
+      const response = await fetch('https://articlebackend-dza5.onrender.com/summarize/', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({url}),
+      })
+      const data = await response.json();
+      setOutput(data.result);
+    }catch(err){
+      console.log(err);
+    }
+    setLoading(false);
   }
 
   return (
@@ -35,13 +42,19 @@ const App = () => {
         >Submit</button>
       </div>
 
-      <textarea 
-        readOnly 
-        name="output" 
-        className='textarea' 
-        placeholder='Summary' 
-        value={output}
-      ></textarea>
+      {loading ? (
+        <div className="spinner">
+          <TailSpin height={40} width={40} color='#4fa94d'></TailSpin>
+        </div>
+      ):(
+        <textarea 
+          readOnly 
+          name="output" 
+          className='textarea' 
+          placeholder='Summary' 
+          value={output}
+        ></textarea>
+      )}
     </div>
   )
 }
